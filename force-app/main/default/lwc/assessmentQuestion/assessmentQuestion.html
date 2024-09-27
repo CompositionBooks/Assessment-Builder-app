@@ -1,0 +1,65 @@
+<!-- assessmentQuestion.html -->
+<template>
+    <!-- Text Input -->
+    <template if:true={isTextType}>
+        <lightning-input
+            type={inputType}
+            required={question.Is_Required__c}
+            value={question.responseValue}
+            onblur={handleBlur}
+        ></lightning-input>
+    </template>
+
+    <!-- Textarea -->
+    <template if:true={isTextareaType}>
+        <lightning-textarea
+            required={question.Is_Required__c}
+            value={question.responseValue}
+            onblur={handleBlur}
+        ></lightning-textarea>
+    </template>
+
+    <!-- Picklist -->
+    <template if:true={isPicklistType}>
+        <lightning-combobox
+            options={question.options}
+            required={question.Is_Required__c}
+            value={question.responseValue}
+            onchange={handleInputChange}
+        ></lightning-combobox>
+    </template>
+
+    <!-- Multi-Select Picklist -->
+    <template if:true={isMultiSelectPicklistType}>
+        <lightning-dual-listbox
+            options={question.options}
+            required={question.Is_Required__c}
+            value={question.responseValueArray}
+            onchange={handleInputChange}
+        ></lightning-dual-listbox>
+    </template>
+
+    <!-- Checkboxes -->
+    <template if:true={isCheckboxType}>
+        <template for:each={question.options} for:item="option">
+            <lightning-input
+                key={option.value}
+                type="checkbox"
+                label={option.label}
+                value={option.value}
+                checked={option.isSelected}
+                onchange={handleInputChange}
+            ></lightning-input>
+        </template>
+    </template>
+
+    <!-- Radio Buttons -->
+    <template if:true={isRadioButtonType}>
+        <lightning-radio-group
+            options={question.options}
+            required={question.Is_Required__c}
+            value={question.responseValue}
+            onchange={handleInputChange}
+        ></lightning-radio-group>
+    </template>
+</template>

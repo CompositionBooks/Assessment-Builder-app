@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AssessmentMessageChannel</fullName>
+    <description>Message channel for assessment instance selection</description>
+    <isExposed>true</isExposed>
+    <masterLabel>AssessmentMessageChannel</masterLabel>
+</MessageChannel>
