@@ -8,7 +8,7 @@ import { loadScript } from 'lightning/platformResourceLoader';
 import SORTABLEJS from '@salesforce/resourceUrl/SortableJS';
 
 export default class QuestionBuilder extends LightningElement {
-    @api recordId; // Template record Id
+    @api recordId;
     @track questions = [];
     @track selectedQuestion = null;
     @track showModal = false;
