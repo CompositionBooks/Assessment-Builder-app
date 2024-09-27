@@ -4,7 +4,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class QuestionEditModal extends LightningElement {
     @api question;
-    @api recordId; // Template record Id
+    @api recordId;
 
     @track selectedQuestion;
     @track isOptionType = false;
@@ -137,7 +137,7 @@ export default class QuestionEditModal extends LightningElement {
         }
     }
 
-    @api // Expose the method to the parent component
+    @api
     handleSaveQuestion() {
         console.log('handleSaveQuestion called in questionEditModal');
         console.log('Selected question data:', this.selectedQuestion);
