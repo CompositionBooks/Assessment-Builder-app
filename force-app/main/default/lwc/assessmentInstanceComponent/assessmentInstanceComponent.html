@@ -17,6 +17,7 @@
                             key={instance.Id}
                             label={instance.Name}
                             data-instance-id={instance.Id}
+                            variant={instance.variant}
                             onclick={handleInstanceClick}
                         ></lightning-button>
                     </template>
@@ -26,7 +27,7 @@
             <!-- Error Message -->
             <template if:true={error}>
                 <div class="slds-text-color_error slds-m-around_medium">
-                    <p>{error}</p>
+                    <p>{errorMessage}</p>
                 </div>
             </template>
         </div>

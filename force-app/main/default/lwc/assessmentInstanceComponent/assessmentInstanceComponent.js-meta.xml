@@ -22,6 +22,14 @@
                 description="Object API Name where this component is used."
                 required="true"
             />
+            <property
+                name="assessmentTemplateField"
+                type="String"
+                label="Assessment Template Lookup Field API Name"
+                description="API name of the lookup field to Assessment Template on the record's object."
+                required="true"
+                default="Assessment_Template__c"
+            />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
