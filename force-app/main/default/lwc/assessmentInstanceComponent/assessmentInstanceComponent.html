@@ -1,0 +1,34 @@
+<template>
+    <lightning-card title="Assessment Instances">
+        <div class="slds-m-around_medium">
+            <!-- Loading Spinner -->
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template>
+
+            <!-- New Assessment Button -->
+            <lightning-button label="New Assessment" onclick={handleNewInstance}></lightning-button>
+
+            <!-- Instance List -->
+            <template if:true={instances}>
+                <div class="slds-m-top_medium">
+                    <template for:each={instances} for:item="instance">
+                        <lightning-button
+                            key={instance.Id}
+                            label={instance.Name}
+                            data-instance-id={instance.Id}
+                            onclick={handleInstanceClick}
+                        ></lightning-button>
+                    </template>
+                </div>
+            </template>
+
+            <!-- Error Message -->
+            <template if:true={error}>
+                <div class="slds-text-color_error slds-m-around_medium">
+                    <p>{error}</p>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
