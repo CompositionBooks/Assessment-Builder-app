@@ -1,0 +1,85 @@
+<template>
+  <div>
+    <!-- Input fields for Question Text and Question Type -->
+    <lightning-input
+      label="Question Text"
+      name="Question_Text__c"
+      value={selectedQuestion.Question_Text__c}
+      onchange={handleInputChange}
+      required
+    ></lightning-input>
+    <lightning-combobox
+      label="Question Type"
+      name="Question_Type__c"
+      value={selectedQuestion.Question_Type__c}
+      options={questionTypeOptions}
+      onchange={handleQuestionTypeChange}
+      required
+    ></lightning-combobox>
+    <lightning-input
+      type="checkbox"
+      label="Is Required"
+      name="Is_Required__c"
+      checked={selectedQuestion.Is_Required__c}
+      onchange={handleCheckboxChange}
+    ></lightning-input>
+
+    <!-- Render options for Option Types (Picklist, Checkbox, etc.) -->
+    <template if:true={isOptionType}>
+      <div class="slds-m-top_medium">
+        <h3>Options</h3>
+        <template for:each={selectedQuestion.options} for:item="option">
+          <div key={option.key} class="slds-grid slds-m-bottom_small">
+            <div class="slds-col slds-size_7-of-12">
+              <lightning-input
+                label="Option Value"
+                name="Value__c"
+                data-key={option.key}
+                value={option.Value__c}
+                onchange={handleOptionChange}
+                required
+              >
+              </lightning-input>
+            </div>
+            <div class="slds-col slds-size_2-of-12 slds-m-top_medium">
+              <lightning-input
+                type="checkbox"
+                label="Active"
+                name="Is_Active__c"
+                data-key={option.key}
+                checked={option.Is_Active__c}
+                onchange={handleOptionChange}
+              >
+              </lightning-input>
+            </div>
+            <div
+              class="slds-col slds-size_1-of-12 slds-text-align_center slds-m-top_medium"
+            >
+              <lightning-button-icon
+                icon-name="utility:delete"
+                alternative-text="Delete"
+                data-key={option.key}
+                onclick={handleDeleteOption}
+              >
+              </lightning-button-icon>
+            </div>
+          </div>
+        </template>
+
+        <!-- Default Option Selection -->
+        <lightning-radio-group
+          label="Default Option"
+          options={defaultOptionChoices}
+          value={selectedDefaultOption}
+          onchange={handleDefaultOptionChange}
+        >
+        </lightning-radio-group>
+
+        <lightning-button
+          label="Add Option"
+          onclick={handleAddOption}
+        ></lightning-button>
+      </div>
+    </template>
+  </div>
+</template>

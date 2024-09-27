@@ -1,0 +1,113 @@
+<template>
+  <lightning-card title="Assessment">
+    <div class="slds-m-around_medium">
+      <!-- Loading Spinner -->
+      <template if:true={isLoading}>
+        <lightning-spinner
+          alternative-text="Loading"
+          size="medium"
+        ></lightning-spinner>
+      </template>
+
+      <!-- Error Message -->
+      <template if:true={error}>
+        <div class="slds-text-color_error slds-m-around_medium">
+          <p>{errorMessage}</p>
+        </div>
+      </template>
+
+      <!-- Questions -->
+      <template if:true={questions}>
+        <lightning-layout multiple-rows>
+          <lightning-layout-item>
+            <template for:each={questions} for:item="question">
+              <div key={question.Id} class="slds-m-bottom_medium">
+                <label class="slds-form-element__label">
+                  {question.Question_Text__c}
+                  <template if:true={question.Is_Required__c}>
+                    <span class="slds-text-color_error">*</span>
+                  </template>
+                </label>
+                <div class="slds-form-element__control slds-m-top_x-small">
+                  <!-- Text Input -->
+                  <template if:true={question.isTextType}>
+                    <lightning-input
+                      data-question-id={question.Id}
+                      data-question-type={question.Question_Type__c}
+                      type={question.inputType}
+                      required={question.Is_Required__c}
+                      onchange={handleInputChange}
+                    ></lightning-input>
+                  </template>
+
+                  <!-- Textarea -->
+                  <template if:true={question.isTextareaType}>
+                    <lightning-textarea
+                      data-question-id={question.Id}
+                      data-question-type={question.Question_Type__c}
+                      required={question.Is_Required__c}
+                      onchange={handleInputChange}
+                    ></lightning-textarea>
+                  </template>
+
+                  <!-- Picklist -->
+                  <template if:true={question.isPicklistType}>
+                    <lightning-combobox
+                      data-question-id={question.Id}
+                      data-question-type={question.Question_Type__c}
+                      options={question.options}
+                      required={question.Is_Required__c}
+                      onchange={handleInputChange}
+                    ></lightning-combobox>
+                  </template>
+
+                  <!-- Multi-Select Picklist -->
+                  <template if:true={question.isMultiSelectPicklistType}>
+                    <lightning-dual-listbox
+                      data-question-id={question.Id}
+                      data-question-type={question.Question_Type__c}
+                      options={question.options}
+                      required={question.Is_Required__c}
+                      onchange={handleInputChange}
+                    ></lightning-dual-listbox>
+                  </template>
+
+                  <!-- Checkboxes -->
+                  <template if:true={question.isCheckboxType}>
+                    <template for:each={question.options} for:item="option">
+                      <lightning-input
+                        key={option.value}
+                        data-question-id={question.Id}
+                        data-question-type={question.Question_Type__c}
+                        type="checkbox"
+                        label={option.label}
+                        value={option.value}
+                        onchange={handleInputChange}
+                      ></lightning-input>
+                    </template>
+                  </template>
+
+                  <!-- Radio Buttons -->
+                  <template if:true={question.isRadioButtonType}>
+                    <lightning-radio-group
+                      data-question-id={question.Id}
+                      data-question-type={question.Question_Type__c}
+                      options={question.options}
+                      required={question.Is_Required__c}
+                      onchange={handleInputChange}
+                    ></lightning-radio-group>
+                  </template>
+                </div>
+              </div>
+            </template>
+          </lightning-layout-item>
+        </lightning-layout>
+        <lightning-button
+          variant="brand"
+          label="Submit"
+          onclick={handleSubmit}
+        ></lightning-button>
+      </template>
+    </div>
+  </lightning-card>
+</template>

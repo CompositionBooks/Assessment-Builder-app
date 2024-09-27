@@ -1,0 +1,56 @@
+<template>
+  <div
+    class="slds-box slds-theme_default slds-p-around_medium slds-m-bottom_medium"
+  >
+    <div>
+      <strong>{question.Question_Text__c}</strong>
+      <template if:true={question.Is_Required__c}>
+        <span class="slds-text-color_error">*</span>
+      </template>
+    </div>
+    <div class="slds-m-top_small">
+      <template if:true={isTextType}>
+        <lightning-input
+          type={inputType}
+          label=""
+          disabled
+          class="slds-input"
+        ></lightning-input>
+      </template>
+      <template if:true={isOptionType}>
+        <template if:true={isPicklistType}>
+          <lightning-combobox
+            options={previewOptions}
+            value={selectedDefaultValue}
+            placeholder="Select an option"
+            disabled
+          ></lightning-combobox>
+        </template>
+        <template if:true={isMultiSelectPicklistType}>
+          <lightning-dual-listbox
+            options={previewOptions}
+            selected-list=""
+            disabled
+          ></lightning-dual-listbox>
+        </template>
+        <template if:true={isCheckboxType}>
+          <template for:each={previewOptions} for:item="opt">
+            <lightning-input
+              key={opt.value}
+              type="checkbox"
+              label={opt.label}
+              disabled
+            ></lightning-input>
+          </template>
+        </template>
+        <template if:true={isRadioButtonType}>
+          <lightning-radio-group
+            options={previewOptions}
+            value={selectedDefaultValue}
+            disabled
+          ></lightning-radio-group>
+        </template>
+      </template>
+    </div>
+  </div>
+</template>

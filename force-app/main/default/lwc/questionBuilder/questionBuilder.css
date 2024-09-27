@@ -1,0 +1,16 @@
+.question-item {
+  border-bottom: 1px solid #d8dde6;
+  padding: 0.5rem 0;
+}
+
+.drag-handle {
+  cursor: move;
+}
+
+.option-list {
+  margin-top: 1rem;
+}
+
+.option-item {
+  margin-bottom: 0.5rem;
+}

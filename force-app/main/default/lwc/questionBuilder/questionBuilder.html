@@ -1,0 +1,113 @@
+<template>
+  <lightning-card title="Assessment Question Builder">
+    <div class="slds-m-around_medium">
+      <!-- Loading Spinner -->
+      <template if:true={loading}>
+        <lightning-spinner
+          alternative-text="Loading"
+          size="medium"
+        ></lightning-spinner>
+      </template>
+
+      <!-- Error Message -->
+      <template if:true={error}>
+        <div class="slds-text-color_error slds-m-around_medium">
+          <p>{formattedError}</p>
+        </div>
+      </template>
+
+      <!-- Question List -->
+      <template if:false={loading}>
+        <div class="slds-grid slds-wrap">
+          <div class="slds-col slds-size_1-of-1">
+            <div class="slds-grid slds-grid_align-spread">
+              <h2>Questions</h2>
+              <lightning-button
+                label="New Question"
+                onclick={handleNewQuestion}
+              ></lightning-button>
+            </div>
+            <div class="slds-m-top_medium question-list">
+              <template for:each={questions} for:item="question">
+                <div
+                  key={question.Id}
+                  class="slds-grid slds-m-bottom_small question-item"
+                >
+                  <div
+                    class="slds-col slds-size_1-of-12 drag-handle slds-text-align_center"
+                  >
+                    ☰
+                  </div>
+                  <div class="slds-col slds-size_9-of-12">
+                    <!-- Use questionRenderer to display the question -->
+                    <c-question-renderer
+                      question={question}
+                    ></c-question-renderer>
+                  </div>
+                  <div class="slds-col slds-size_1-of-12">
+                    <lightning-button-icon
+                      icon-name="utility:edit"
+                      alternative-text="Edit"
+                      data-id={question.Id}
+                      onclick={handleEditQuestion}
+                    ></lightning-button-icon>
+                  </div>
+                  <div class="slds-col slds-size_1-of-12">
+                    <lightning-button-icon
+                      icon-name="utility:delete"
+                      alternative-text="Delete"
+                      data-id={question.Id}
+                      onclick={handleDeleteQuestion}
+                    ></lightning-button-icon>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+  </lightning-card>
+
+  <!-- Edit Modal -->
+  <template if:true={showModal}>
+    <section
+      role="dialog"
+      tabindex="-1"
+      aria-modal="true"
+      aria-labelledby="modal-heading-01"
+      class="slds-modal slds-fade-in-open"
+    >
+      <div class="slds-modal__container">
+        <!-- Header -->
+        <header class="slds-modal__header">
+          <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">
+            {modalTitle}
+          </h2>
+        </header>
+        <!-- Body -->
+        <div class="slds-modal__content slds-p-around_medium">
+          <c-question-edit-modal
+            question={selectedQuestion}
+            record-id={recordId}
+            onsuccess={handleModalSuccess}
+            oncancel={handleModalCancel}
+          ></c-question-edit-modal>
+        </div>
+        <!-- Footer -->
+        <footer class="slds-modal__footer">
+          <lightning-button
+            label="Cancel"
+            onclick={handleModalCancel}
+          ></lightning-button>
+          <lightning-button
+            label="Save"
+            variant="brand"
+            onclick={handleModalSave}
+          ></lightning-button>
+        </footer>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+  </template>
+</template>
